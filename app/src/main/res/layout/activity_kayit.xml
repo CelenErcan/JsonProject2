@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/large_0367601"
+    android:padding="50dp"
+    tools:context="ercan.jsonproject.Kayit">
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Adınız"
+        android:textColorHint="@color/black"
+        android:textColor="@color/text"
+        android:id="@+id/ad"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Soyadınız"
+        android:textColorHint="@color/black"
+        android:textColor="@color/text"
+        android:id="@+id/soyad"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Telefon"
+        android:inputType="phone"
+        android:textColorHint="@color/black"
+        android:textColor="@color/text"
+        android:id="@+id/telefon"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mail"
+        android:id="@+id/mail"
+        android:textColorHint="@color/black"
+        android:textColor="@color/text"
+        android:inputType="textEmailAddress"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Şifre"
+        android:id="@+id/sifre"
+        android:textColorHint="@color/black"
+        android:textColor="@color/text"
+        android:inputType="textPassword"
+        />
+
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="match_parent">
+
+
+        <Button
+            android:onClick="Kaydet"
+            android:id="@+id/button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:text="Kaydet" />
+    </RelativeLayout>
+
+</LinearLayout>

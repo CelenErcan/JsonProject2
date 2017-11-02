@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/large_0367601"
+    android:padding="50dp"
+    tools:context="ercan.jsonproject.Giris">
+
+
+
+
+    <EditText
+        android:layout_marginTop="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mail"
+        android:id="@+id/girisMail"
+        android:textColorHint="@color/black"
+        android:textColor="@color/text"
+        android:inputType="textEmailAddress"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Şifre"
+        android:id="@+id/girisSifre"
+        android:textColorHint="@color/black"
+        android:textColor="@color/text"
+        android:inputType="textPassword"
+        />
+
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="match_parent">
+
+
+        <Button
+            android:onClick="Giris"
+            android:id="@+id/button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:text="Giriş" />
+    </RelativeLayout>
+
+</LinearLayout>
