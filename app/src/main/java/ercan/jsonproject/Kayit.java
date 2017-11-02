@@ -23,6 +23,7 @@ import java.io.IOException;
 
 public class Kayit extends AppCompatActivity {
     EditText ad,soyad,tel,mail,sifre;
+    boolean var = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +45,11 @@ public class Kayit extends AppCompatActivity {
         }
         else
         {
+            var = true;
             String url = "http://jsonbulut.com/json/userLogin.php?ref=cb226ff2a31fdd460087fedbb34a6023&" +
                     "userEmail="+mail1+"&" +
                     "userPass="+sifre1+"&face=no";
-            new jsonData(url,this).execute();
+            new jsonData(url,this, var).execute();
             Toast.makeText(this, "Başka Bir Kayıt İçin Lütfen Çıkış Yapın", Toast.LENGTH_SHORT).show();
             finish();
 
@@ -105,7 +107,7 @@ public class Kayit extends AppCompatActivity {
             this.mail.setText("");
             this.sifre.setText("");
 
-            new jsonData(url, Kayit.this).execute();
+            new jsonData(url, Kayit.this, var).execute();
         }
 
     }
@@ -117,7 +119,7 @@ public class Kayit extends AppCompatActivity {
 
         ProgressDialog pro;
 
-        public jsonData(String url, Context cnx) {
+        public jsonData(String url, Context cnx, boolean var) {
             this.url = url;
             this.cnx = cnx;
 
@@ -156,21 +158,33 @@ public class Kayit extends AppCompatActivity {
                 String mesaj = obj.getJSONArray("user").getJSONObject(0).getString("mesaj");
 
                 if (durum) {
-                    Toast.makeText(cnx, mesaj, Toast.LENGTH_SHORT).show();
-                    String kid = obj.getJSONArray("user").getJSONObject(0).getString("kullaniciId");
-                    Log.e("kid", kid);
+                    if(var)
+                    {
+                        String kid = obj.getJSONArray("user").getJSONObject(0).getJSONObject("bilgiler").getString("userId");
+                        Toast.makeText(cnx, "Kullanıcı ID si= " + kid, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(cnx, mesaj, Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(Kayit.this, Giris_Ekrani.class);
+                        startActivity(i);
+                        var=false;
+                        finish();
+                    }
+                    else {
+                        String kid = obj.getJSONArray("user").getJSONObject(0).getJSONObject("bilgiler").getString("userId");
+                        Toast.makeText(cnx, "Kullanıcı ID si= " + kid, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(cnx, mesaj, Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(Kayit.this, Giris_Ekrani.class);
+                        startActivity(i);
 
-                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    SharedPreferences.Editor editor = preferences.edit();
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = preferences.edit();
 
-                    editor.putString("kmail", mail.getText().toString());
-                    editor.putString("ksifre", sifre.getText().toString());
+                        editor.putString("kmail", mail.getText().toString());
+                        editor.putString("ksifre", sifre.getText().toString());
 
-                    editor.commit();
+                        editor.commit();
 
-                    Intent i = new Intent(Kayit.this,Giris_Ekrani.class);
-                    startActivity(i);
-                    finish();
+                        finish();
+                    }
                 } else {
                     Toast.makeText(cnx, mesaj, Toast.LENGTH_SHORT).show();
                 }

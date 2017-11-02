@@ -24,6 +24,7 @@ import java.io.IOException;
 public class Giris extends AppCompatActivity {
     EditText mail, sifre;
     String maill,sifree;
+    boolean var = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +45,11 @@ public class Giris extends AppCompatActivity {
         }
         else
         {
+            var = true;
             String url = "http://jsonbulut.com/json/userLogin.php?ref=cb226ff2a31fdd460087fedbb34a6023&" +
                     "userEmail="+mail1+"&" +
                     "userPass="+sifre1+"&face=no";
-            new jsonData(url,this).execute();
+            new jsonData(url,this, var).execute();
             Toast.makeText(this, "Başka Bir Kayıt İçin Lütfen Çıkış Yapın", Toast.LENGTH_SHORT).show();
             finish();
 
@@ -84,7 +86,7 @@ public class Giris extends AppCompatActivity {
                     "userEmail="+maill+"&" +
                     "userPass="+sifree+"&face=no";
 
-            new jsonData(url, Giris.this).execute();
+            new jsonData(url, Giris.this, var).execute();
         }
 
     }
@@ -103,7 +105,7 @@ public class Giris extends AppCompatActivity {
 
         ProgressDialog pro;
 
-        public jsonData(String url, Context cnx) {
+        public jsonData(String url, Context cnx, boolean var) {
             this.url = url;
             this.cnx = cnx;
 
@@ -141,21 +143,34 @@ public class Giris extends AppCompatActivity {
                 String mesaj = obj.getJSONArray("user").getJSONObject(0).getString("mesaj");
 
                 if (durum) {
-                    String kid = obj.getJSONArray("user").getJSONObject(0).getJSONObject("bilgiler").getString("userId");
-                    Toast.makeText(cnx, "Kullanıcı ID si= "+kid, Toast.LENGTH_SHORT).show();
-                    Toast.makeText(cnx, mesaj, Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(Giris.this,Giris_Ekrani.class);
-                    startActivity(i);
 
-                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    SharedPreferences.Editor editor = preferences.edit();
+                    if(var)
+                    {
+                        String kid = obj.getJSONArray("user").getJSONObject(0).getJSONObject("bilgiler").getString("userId");
+                        Toast.makeText(cnx, "Kullanıcı ID si= " + kid, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(cnx, mesaj, Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(Giris.this, Giris_Ekrani.class);
+                        startActivity(i);
+                        var=false;
+                        finish();
+                    }
+                    else {
+                        String kid = obj.getJSONArray("user").getJSONObject(0).getJSONObject("bilgiler").getString("userId");
+                        Toast.makeText(cnx, "Kullanıcı ID si= " + kid, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(cnx, mesaj, Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(Giris.this, Giris_Ekrani.class);
+                        startActivity(i);
 
-                    editor.putString("kmail", mail.getText().toString());
-                    editor.putString("ksifre", sifre.getText().toString());
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = preferences.edit();
 
-                    editor.commit();
+                        editor.putString("kmail", mail.getText().toString());
+                        editor.putString("ksifre", sifre.getText().toString());
 
-                    finish();
+                        editor.commit();
+
+                        finish();
+                    }
                 } else {
                     Toast.makeText(cnx, mesaj, Toast.LENGTH_SHORT).show();
                 }

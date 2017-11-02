@@ -22,7 +22,7 @@ import org.jsoup.Jsoup;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
-
+    boolean var = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
         WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences preferences =
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         String mail = preferences.getString("kmail", "bos");
         String sifre = preferences.getString("ksifre", "bos");
@@ -42,10 +43,11 @@ public class MainActivity extends AppCompatActivity {
         }
         else
         {
+            var = true;
             String url = "http://jsonbulut.com/json/userLogin.php?ref=cb226ff2a31fdd460087fedbb34a6023&" +
                     "userEmail="+mail+"&" +
                     "userPass="+sifre+"&face=no";
-            new jsonData(url,MainActivity.this).execute();
+            new jsonData(url,MainActivity.this, var).execute();
         }
 
 
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
         ProgressDialog pro;
 
-        public jsonData(String url, Context cnx) {
+        public jsonData(String url, Context cnx, boolean var) {
             this.url = url;
             this.cnx = cnx;
 
@@ -109,15 +111,17 @@ public class MainActivity extends AppCompatActivity {
                 boolean durum = obj.getJSONArray("user").getJSONObject(0).getBoolean("durum");
                 String mesaj = obj.getJSONArray("user").getJSONObject(0).getString("mesaj");
 
-                if (durum) {
-                    String kid = obj.getJSONArray("user").getJSONObject(0).getJSONObject("bilgiler").getString("userId");
-                    Toast.makeText(cnx, "Kullanıcı ID si= "+kid, Toast.LENGTH_SHORT).show();
-                    Toast.makeText(cnx, mesaj, Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(MainActivity.this,Giris_Ekrani.class);
-                    startActivity(i);
+                if (durum)
+                {
 
+                        String kid = obj.getJSONArray("user").getJSONObject(0).getJSONObject("bilgiler").getString("userId");
+                        Toast.makeText(cnx, "Kullanıcı ID si= " + kid, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(cnx, mesaj, Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(MainActivity.this, Giris_Ekrani.class);
+                        startActivity(i);
 
-                } else {
+                }
+                else {
                     Toast.makeText(cnx, mesaj, Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
