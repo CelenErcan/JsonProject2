@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class Giris_Ekrani extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -124,5 +125,12 @@ public class Giris_Ekrani extends AppCompatActivity
         Intent i = new Intent(Giris_Ekrani.this, MainActivity.class);
         startActivity(i);
         finish();
+    }
+
+    @Override
+    protected void onPause() {
+         super.onPause();
+        Toast.makeText(this, "Lütfen Bir Önceki Sayfaya Dönebilmek İçin Çıkış Yapın.", Toast.LENGTH_SHORT).show();
+        this.finish();
     }
 }

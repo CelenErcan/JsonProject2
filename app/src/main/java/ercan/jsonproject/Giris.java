@@ -35,26 +35,6 @@ public class Giris extends AppCompatActivity {
         setContentView(R.layout.activity_giris);
 
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String mail1 = preferences.getString("kmail", "bos");
-        String sifre1 = preferences.getString("ksifre", "bos");
-
-        if(mail1.equals("bos") || sifre1.equals("bos"))
-        {
-            //Toast.makeText(this, mail+" "+sifre, Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            var = true;
-            String url = "http://jsonbulut.com/json/userLogin.php?ref=cb226ff2a31fdd460087fedbb34a6023&" +
-                    "userEmail="+mail1+"&" +
-                    "userPass="+sifre1+"&face=no";
-            new jsonData(url,this, var).execute();
-            Toast.makeText(this, "Başka Bir Kayıt İçin Lütfen Çıkış Yapın", Toast.LENGTH_SHORT).show();
-            finish();
-
-        }
-
         mail = (EditText) findViewById(R.id.girisMail);
         sifre = (EditText) findViewById(R.id.girisSifre);
 
@@ -181,6 +161,4 @@ public class Giris extends AppCompatActivity {
             pro.dismiss();
         }
     }
-
-
 }

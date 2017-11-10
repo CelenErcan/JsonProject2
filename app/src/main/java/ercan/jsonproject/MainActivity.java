@@ -30,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
         WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
         SharedPreferences preferences =
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -39,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(mail.equals("bos") || sifre.equals("bos"))
         {
-           //Toast.makeText(this, mail+" "+sifre, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, mail+" "+sifre, Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -49,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
                     "userPass="+sifre+"&face=no";
             new jsonData(url,MainActivity.this, var).execute();
         }
-
 
     }
 
